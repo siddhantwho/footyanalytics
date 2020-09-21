@@ -12,13 +12,13 @@ The components of this projects are displayed below:
 
 A series of actions can be viewed by the plotting function or the events_viz method in the Match object, the visualisation tool then plots such a series of actions, using a colourmap to scale the offensive values of the action and different markers to designate the different key actions.:
 
-![Gerrard's famous goal against AC Milan in 2005](gerrard.png)
+![Gerrard's famous goal against AC Milan in 2005](images/gerrard.png)
 
 The colour scale is based off the offensive rating of the action
 
 A Match object that contains all the information associated with the football match including events, lineups and match details. The details are available to view:
 
-![Match Information](matchinfo.png)
+![Match Information](images/matchinfo.png)
 
 Coming soon:
 
