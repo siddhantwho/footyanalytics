@@ -4,8 +4,8 @@ An analysis tool for football (soccer) match event data- creates ratings and vis
 Implementation of a classifier to predict the odds that a given action in a football match will lead to a goal being scored. The algorithm is trained on the initial and final location of the actions, the type of action, its location with respect to the goal and the pattern of play (free kicks, throw-ins etc.). The classifier then learns whether the action leads to a goal (scored or conceded) in the next *x* match events and then values that action. This is then converted into an action rating as outlined in "Actions Speak Louder Than Goals: Valuing Player Actions in Soccer - https://dl.acm.org/doi/10.1145/3292500.3330758 ."
 
 Scores of current version:
-Goal scored = (ROC: 92.95%), (Brier: 82.00 %)
-Goal conceded = (ROC: 96.28), (Brier: 86.96 %)
+1. Goal scored = (ROC: 92.95%), (Brier: 82.00 %)
+2. Goal conceded = (ROC: 96.28), (Brier: 86.96 %)
 
 
 The components of this projects are displayed below:
