@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import matplotlib.lines as mlines
 
+pitch = mpimg.imread('pitch.png')
+
 def plot_actions(actions_df, team, value = 'offence_value'):
     
     plt.figure(figsize = (6,9),dpi = 300)
