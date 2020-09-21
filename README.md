@@ -7,5 +7,10 @@ The components of this project are:
 
 A Match object that contains all the information associated with the football match including events, lineups and match details. The details are available to view:
 
+![Match Information](matchinfo.png)
+
+A series of actions can be viewed by the plotting functions or the events_viz method in the Match object:
+
+
 
 The visualisation tool then plots such a series of actions, using a colourmap to scale the offensive or defensive values of the action.
