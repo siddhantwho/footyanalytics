@@ -7,6 +7,5 @@ The components of this project are:
 
 A Match object that contains all the information associated with the football match including events, lineups and match details. The details are available to view:
 
-![Match Information](C/Users/sid96/Desktop/matchinfo.png)
 
 The visualisation tool then plots such a series of actions, using a colourmap to scale the offensive or defensive values of the action.
