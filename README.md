@@ -23,7 +23,8 @@ A Match object that contains all the information associated with the football ma
 Coming soon:
 
 1. A more sophisticated classifier to designate action ratings- football is not just about goals.
-2. Visualistaion tools to view lineups and tactical shifts.
+2. Visualisation tools to view lineups and tactical shifts.
+3. Improving scores by training on a larger dataset/ tweaking features.
 
 
 
