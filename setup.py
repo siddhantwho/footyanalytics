@@ -14,8 +14,7 @@ setup(
         'numpy==1.15.40',
         'scikit-learn==0.20.1',
         'matplotlib==3.0.2',
-        'xgboost==1.1.1',
-        'tqdm==4.28.1'
+        'xgboost==1.1.1'
     ]
     )
     
