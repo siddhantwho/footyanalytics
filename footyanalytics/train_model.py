@@ -4,13 +4,12 @@ import numpy as np
 from sklearn.preprocessing import OneHotEncoder
 import xgboost
 from sklearn.metrics import brier_score_loss, roc_auc_score, log_loss
-from tqdm import tqdm
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import matplotlib.lines as mlines
 
-import Match.py
+
 
 def offence_value(events, scores, concedes, Y):
     
@@ -55,17 +54,17 @@ def defence_value(events, scores, concedes, Y):
     
     return defscore
 
-def label_match(training_data, matchfeats, model, events_full):
+def label_match(X_data, Y_data, matchfeats, model, events_full):
     missing = []
-    for i in list(training_data.columns):
+    for i in list(X_data.columns):
         if i not in list(matchfeats.columns):
             kwargs = {i:0}
             matchfeats = matchfeats.assign(**kwargs)
             
-    matchfeats = matchfeats[list(training_data.columns)]
+    matchfeats = matchfeats[list(X_data.columns)]
             
     Y_new = pd.DataFrame()
-    for col in Y.columns:
+    for col in Y_data.columns:
         Y_new[col] = [p[1] for p in model[col].predict_proba(matchfeats)]
     
     events_full = events_full.assign(offence_value = offence_value(events_full,Y_new.scores,Y_new.concedes,Y_new))
@@ -105,3 +104,4 @@ def train_model(features, labels):
         Y_hat[col] = [p[1] for p in models[col].predict_proba(testX)]
         print(f"### Y: {col} ###")
         evaluate(testY[col],Y_hat[col])
+    return models

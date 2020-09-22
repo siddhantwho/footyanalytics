@@ -2,8 +2,9 @@ import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import matplotlib.lines as mlines
+import numpy as np
 
-pitch = mpimg.imread('pitch.png')
+pitch = mpimg.imread('footyanalytics/pitch.png')
 
 def plot_actions(actions_df, team, value = 'offence_value'):
     
@@ -18,7 +19,7 @@ def plot_actions(actions_df, team, value = 'offence_value'):
         actno = '(' + str(index +1) + ')'
         jersey = str(int(row.jersey_number))
         #annot = actno + ' - ' + '(' + jersey +')'
-        #annot = actno
+        annot = ''
         
         cmobj = matplotlib.cm.ScalarMappable(norm = None,cmap = 'YlOrRd')
         cmap = cmobj.get_cmap()
@@ -46,7 +47,7 @@ def plot_actions(actions_df, team, value = 'offence_value'):
         if (row.action == 'Pass') or (row.action == 'Clearance'):
             plt.plot([xi,xf],[yi,yf],color=colour,ls = '--')
 
-            plt.annotate(annot,(xi,yi),(ax,ay),color=colour,size=6)
+            #plt.annotate(annot,(xi,yi),(ax,ay),color=colour,size=6)
             plt.arrow((xi+xf)/2,(yi+yf)/2,dx/(dx**2 + dy**2),dy/(dx**2 + dy**2),color='white',width = 0, head_width = 25,
                       ls = '-', length_includes_head = True)
 
@@ -56,7 +57,7 @@ def plot_actions(actions_df, team, value = 'offence_value'):
         if (row.action == 'Carry') or (row.action == 'Dribble'):
             plt.plot([xi,xf],[yi,yf],color=colour, ls = ':')
 
-            plt.annotate(annot,(xi,yi),(ax,ay),color=colour,size=6)
+            #plt.annotate(annot,(xi,yi),(ax,ay),color=colour,size=6)
 
         if (row.action == 'Pressure') or (row.action == 'Duel'):
             plt.plot(xi,yi, color= colour, marker= pressure) 
