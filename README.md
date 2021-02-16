@@ -1,4 +1,8 @@
 # footyanalytics
+[![Python: 3.6+](https://img.shields.io/badge/Python-3.6+-blue.svg)](https://pypi.org/project/socceraction)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://en.wikipedia.org/wiki/MIT_License)
+[![Build Status](https://travis-ci.org/ML-KULeuven/socceraction.svg?branch=master)](https://travis-ci.org/ML-KULeuven/socceraction)
+
 An analysis tool for football (soccer) match event data- creates ratings and visualisation for match events. This project uses the open source Statsbomb play-by-play (event) data (https://github.com/statsbomb/open-data) and the Match object is compatible for reading, processing and viewing Statsbomb event data files.
 
 Implementation of a classifier to predict the odds that a given action in a football match will lead to a goal being scored. The algorithm is trained on the initial and final location of the actions, the type of action, its location with respect to the goal and the pattern of play (free kicks, throw-ins etc.). The classifier then learns whether the action leads to a goal (scored or conceded) in the next *x* match events and then values that action. This is then converted into an action rating as outlined in "Actions Speak Louder Than Goals: Valuing Player Actions in Soccer" by Decroos et al.
