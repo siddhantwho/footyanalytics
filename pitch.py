@@ -52,7 +52,7 @@ class Pitch:
         self.axes = axes
         self.figure = figure
 
-    def __pitch_components(traditional = False):
+    def __pitch_components(self, traditional: bool = False):
         """
         creates matolotlib objects representing shapes on the football pitch
         ...
@@ -71,10 +71,10 @@ class Pitch:
         else:
             pitch_color = 'white'
             line_color = 'black'
-            
+
         return [
             Rectangle((0, 0), width=self.width, length=self.length,
-                        fill=False, color='grey'),  # pitch
+                        fill=pitch_color, color=line_color),  # pitch
             Rectangle([0, 22.3], width=14.6, length=35.3,
                         fill=False),  # left penalty area
             Rectangle([105.4, 22.3], width=14.6, length=35.3,
@@ -82,14 +82,14 @@ class Pitch:
             ConnectionPatch([60, 0], [60, 80], "data", "data"),
             Rectangle([0, 32], width=4.9, length=16, fill=False),
             Rectangle([115.1, 32], width=4.9, length=16, fill=False),
-            plt.Circle((60, 40), 9.1, color="black", fill=False),
-            plt.Circle((60, 40), 0.33, color="black"),
-            plt.Circle((9.7, 40), 0.33, color="black"),
-            plt.Circle((110.3, 40), 0.33, color="black"),
+            plt.Circle((60, 40), 9.1, color=line_color, fill=False),
+            plt.Circle((60, 40), 0.33, color=line_color),
+            plt.Circle((9.7, 40), 0.33, color=line_color),
+            plt.Circle((110.3, 40), 0.33, color=line_color),
             Arc((9.7, 40), length=16.2, width=16.2, angle=0,
-                theta1=310, theta2=50, color="black"),
+                theta1=310, theta2=50, color=line_color),
             Arc((110.3, 40), length=16.2, width=16.2, angle=0,
-                theta1=130, theta2=230, color="black")
+                theta1=130, theta2=230, color=line_color)
         ]
 
 
