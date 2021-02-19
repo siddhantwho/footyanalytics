@@ -1,3 +1,23 @@
+
+positions = {
+    'Goalkeeper' : 1,
+    'Right Back' : 2,
+    'Right Center Back' : 3,
+    'Left Center Back' : 4,
+    'Left Back' : 5,
+    'Right Wing Back' : 12,
+    'Left Wing Back' : 13,
+    'Right Defensive Midfielder' : 6,
+    'Center Defensive Midfielder' : 6.1, 
+    'Left Defensive Midfielder' : 6.2,
+    'Right Center Midfield' : 8.1,
+    'Left Center Midfield' : 8.2,
+    'Right Wing' : 7.1,
+    'Center Forward' : 7.2,
+    'Left Wing' : 7.3,
+    'Striker' : 7.4
+}
+
 class Match:
     """
     A class used to represent a football Match captured by event (play by play) data
@@ -20,11 +40,11 @@ class Match:
 
 
     """
-    def __init__(self, match, competition, match_id, lineup):
+    def __init__(self, events : list, competition : list, match_id : int, lineup : list):
         """
         Parameters
         ----------
-        match : list
+        events : list
             A list of json objects representing the events in a football game
         competition : list
             A list of json objects representing all the match information in the competition of interest
@@ -33,7 +53,14 @@ class Match:
         lineup : list
             A list of json objects representing the lineup information for the match
         """
-        self.match = match
+        self.events = events
         self.competition = competition
         self.match_id = match_id
         self.lineup = lineup
+    
+    def Lineups(self):
+        """
+        Shows a matplotlib visual representation of the starting lineups of both teams
+        """
+        home_formation = self.events[0]['tactics']['formation']
+        away_formation = self.events[1]['tactics']['formation']
