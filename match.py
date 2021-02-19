@@ -3,6 +3,7 @@ positions = {
     'Goalkeeper' : 1,
     'Right Back' : 2,
     'Right Center Back' : 3,
+    'Center Back' : 3.5,
     'Left Center Back' : 4,
     'Left Back' : 5,
     'Right Wing Back' : 12,
@@ -12,9 +13,15 @@ positions = {
     'Left Defensive Midfielder' : 6.2,
     'Right Center Midfield' : 8.1,
     'Left Center Midfield' : 8.2,
+    'Left Midfield' : 8.5,
+    'Right Midfield' : 8.6,
+    'Right Attacking Midfield' : 8.8,
+    'Left Attacking Midfield' : 8.9,
     'Right Wing' : 7.1,
     'Center Forward' : 7.2,
     'Left Wing' : 7.3,
+    'Left Center Forward' : 9.1,
+    'Right Center Forward' : 9.2,
     'Striker' : 7.4
 }
 
