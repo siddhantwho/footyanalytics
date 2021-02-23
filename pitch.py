@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Arc, Circle, ConnectionPatch, Rectangle, Wedge
 
-def jersey(x:float,y:float, home: bool, traditional: bool) -> list:
+def jersey(x:float,y:float, home: bool, traditional: bool, **kwargs) -> list:
     """
     Returns a list of matplotlib objects that form the shape of a jersey
     ...
@@ -24,9 +24,19 @@ def jersey(x:float,y:float, home: bool, traditional: bool) -> list:
   
             Rectangle([x-1.5,y-1], width=2.5, height=2.5, fill=True, ec = "red", fc ="red"),
             Rectangle([x+1,y-1.75], width=1, height=4, fill=True, ec = "red", fc ="red"),
-            Wedge((x+2.25,y+0.25),r=0.8, theta1=90, theta2=270, ec="white", fill = True, fc = 'white')
+            Wedge((x+2.25,y+0.25),r=0.8, theta1=90, theta2=270, ec=pitch_color,
+            fill = True, fc = pitch_color)
 
         ]
+    else:
+        return [
+            Rectangle([x-1,y-1], width=2.5, height=2.5, fill=True, ec = "blue", fc ="blue"),
+            Rectangle([x-2,y-1.75], width=1, height=4, fill=True, ec = "blue", fc ="blue"),
+            Wedge((x-2.25,y+0.25),r=0.8, theta1=270, theta2=90, ec=pitch_color,
+            fill = True, fc = pitch_color)
+
+        ]
+
 
     
     
