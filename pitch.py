@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.patches import Arc, Circle, ConnectionPatch, Rectangle
+from matplotlib.patches import Arc, Circle, ConnectionPatch, Rectangle, Wedge
 
-def jersey(x:float,y:float) -> list:
+def jersey(x:float,y:float, home: bool, traditional: bool) -> list:
     """
     Returns a list of matplotlib objects that form the shape of a jersey
     ...
@@ -12,10 +12,25 @@ def jersey(x:float,y:float) -> list:
         x position of the jersey
     y : float
         y position of the jersey
+    home : bool
+        Whether its a home or away team jersey
+    traditional : bool
+        traditional colours are green and white, else white and black.
     """
-    return [
+    pitch_color = 'green' if traditional else 'white'
 
-    ]
+    if home:
+        return [
+  
+            Rectangle([x-1.5,y-1], width=2.5, height=2.5, fill=True, ec = "red", fc ="red"),
+            Rectangle([x+1,y-1.75], width=1, height=4, fill=True, ec = "red", fc ="red"),
+            Wedge((x+2.25,y+0.25),r=0.8, theta1=90, theta2=270, ec="white", fill = True, fc = 'white')
+
+        ]
+
+    
+    
+
 
 class Pitch:
     """
@@ -59,7 +74,7 @@ class Pitch:
         self.width = width
 
         figure, axes = plt.subplots(figsize = (self.length/10,self.width/10))
-        axes.axis('off')  # this hides the x and y ticks
+        axes.axis('on')  # this hides the x and y ticks
         plt.ylim(-2, self.width + 2)
         plt.xlim(-2, self.length + 2)
         components = self.__pitch_components()
