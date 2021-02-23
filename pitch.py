@@ -18,28 +18,24 @@ def jersey(x:float,y:float, home: bool, traditional: bool, **kwargs) -> list:
         traditional colours are green and white, else white and black.
     """
     pitch_color = 'green' if traditional else 'white'
-
+    a = kwargs['scale']
     if home:
         return [
   
-            Rectangle([x-1.5,y-1], width=2.5, height=2.5, fill=True, ec = "red", fc ="red"),
-            Rectangle([x+1,y-1.75], width=1, height=4, fill=True, ec = "red", fc ="red"),
-            Wedge((x+2.25,y+0.25),r=0.8, theta1=90, theta2=270, ec=pitch_color,
+            Rectangle([x-1.5*a,y-1*a], width=2.5*a, height=2.5*a, fill=True, ec = "red", fc ="red"),
+            Rectangle([x+1*a,y-1.75*a], width=1*a, height=4*a, fill=True, ec = "red", fc ="red"),
+            Wedge((x+2.25*a,y+0.25*a),r=0.8*a, theta1=90, theta2=270, ec=pitch_color,
             fill = True, fc = pitch_color)
 
         ]
     else:
         return [
-            Rectangle([x-1,y-1], width=2.5, height=2.5, fill=True, ec = "blue", fc ="blue"),
-            Rectangle([x-2,y-1.75], width=1, height=4, fill=True, ec = "blue", fc ="blue"),
-            Wedge((x-2.25,y+0.25),r=0.8, theta1=270, theta2=90, ec=pitch_color,
+            Rectangle([x-1*a,y-1*a], width=2.5*a, height=2.5*a, fill=True, ec = "blue", fc ="blue"),
+            Rectangle([x-2*a,y-1.75*a], width=1*a, height=4*a, fill=True, ec = "blue", fc ="blue"),
+            Wedge((x-2.25*a,y+0.25*a),r=0.8*a, theta1=270, theta2=90, ec=pitch_color,
             fill = True, fc = pitch_color)
 
         ]
-
-
-    
-    
 
 
 class Pitch:
@@ -90,6 +86,10 @@ class Pitch:
         components = self.__pitch_components()
         for shape in components: #draw pitch using individual shapes
             axes.add_artist(shape)
+        test_jersey = jersey(60,60,True,True,scale = 2)
+        for parts in test_jersey:
+            axes.add_artist(parts)
+
 
         self.axes = axes
         self.figure = figure
