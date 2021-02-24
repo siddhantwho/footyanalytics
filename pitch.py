@@ -4,31 +4,36 @@ from matplotlib.patches import Arc, Circle, ConnectionPatch, Rectangle, Wedge
 
 positions = {
     'Goalkeeper' : (7.5,40),
-    'Right Back' : (22.5, 12),
-    'Right Center Back' : (20,32),
-    'Center Back' : (22.5, 40),
-    'Left Center Back' : (20,48),
-    'Left Back' : (22.5,68),
-    'Right Wing Back' : (27.5,10),
-    'Left Wing Back' : (27.5,70),
+
+    'Right Back' : (20, 12),
+    'Right Center Back' : (17.5,32),
+    'Center Back' : (20, 40),
+    'Left Center Back' : (17.5,48),
+    'Left Back' : (20,68),
+    'Right Wing Back' : (25,10),
+    'Left Wing Back' : (25,70),
+
     'Right Defensive Midfield' : (30, 20),
     'Center Defensive Midfield' : (30, 40), 
     'Left Defensive Midfield' : (30,60),
-    'Right Center Midfield' : (40,32),
-    'Left Center Midfield' : (40, 48),
-    'Left Midfield' : (40,70),
-    'Right Midfield' : (40,10),
-    'Right Attacking Midfield' : (45,20),
-    'Left Attacking Midfield' : (45,60),
+    'Right Center Midfield' : (35,20),
+    'Center Midfield' : (35, 40),
+    'Left Center Midfield' : (35, 60),
+    'Left Midfield' : (35,70),
+    'Right Midfield' : (35,10),
+    'Right Attacking Midfield' : (42.5,20),
+    'Center Attacking Midfield' : (42.5, 40),
+    'Left Attacking Midfield' : (42.5,60),
+
     'Right Wing' : (50,10),
     'Center Forward' : (52.5, 40),
     'Left Wing' : (50,70),
     'Left Center Forward' : (52.5, 55),
     'Right Center Forward' : (52.5,25),
-    'Striker' : (60,60)
+    'Secondary Striker' : (50,40)
 }
 
-def jersey(x:float,y:float, home: bool, traditional: bool) -> list:
+def jersey(x:float,y:float, home: bool, traditional: bool, **kwargs) -> list:
     """
     Returns a list of matplotlib objects that form the shape of a jersey
     ...
@@ -43,8 +48,12 @@ def jersey(x:float,y:float, home: bool, traditional: bool) -> list:
     traditional : bool
         traditional colours are green and white, else white and black.
     """
-    pitch_color = 'green' if traditional else 'white'
     a = 2.5 #scale factor
+    pitch_color = 'green' if traditional else 'white'
+    if kwargs:
+        if kwargs['full']:
+            a = 3.25
+     
     if home:
         return [
   
@@ -159,7 +168,7 @@ class Pitch:
                 theta1=130, theta2=230, color=line_color)
         ]
 
-    def buildLineUp(self, lineup: list, home: bool):
+    def buildLineUp(self, lineup: list, home: bool, both: bool = True):
         """
         Builds a visual representation of the lineup on the pitch object
         ...
@@ -169,16 +178,21 @@ class Pitch:
             List of players participating in the game found in the event data
         home : bool
             Home or away team
+        both : bool
+            Whether to plot the lineups of both teams
         """
         lineup_list = []
         for player in lineup:
             lineup_list.append([player['player']['name'], player['position']['name'],player['jersey_number']])
-        reflector_x = 0 if home else 120
+        
+        reflector_x = 0 if home else 120 #reflects positions to right side of pitch
         reflector_y = 0 if home else 80
+        scale = 1 if both else 2
+        full_field = False if both else True
         for player in lineup_list:
-            icon = jersey(abs(reflector_x - positions[player[1]][0]),
+            icon = jersey(abs(reflector_x - positions[player[1]][0])*scale,
                           abs(reflector_y - positions[player[1]][1]),
-                          home, self.traditional)
+                          home, self.traditional, full = full_field)
             for parts in icon:
                 self.axes.add_artist(parts)
     

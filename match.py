@@ -45,10 +45,18 @@ class Match:
         Shows a matplotlib visual representation of the starting lineups of both teams
         """
         newpitch = Pitch()
-        newpitch.buildLineUp(self.events[0]['tactics']['lineup'], home = True)
-        newpitch.buildLineUp(self.events[1]['tactics']['lineup'], home = False)
+        newpitch.buildLineUp(self.events[0]['tactics']['lineup'], home = True, both = True)
+        newpitch.buildLineUp(self.events[1]['tactics']['lineup'], home = False, both = True)
         newpitch.show()
         
+    def Formation(self, home_team: bool):
+        newpitch = Pitch()
+        team_index = 0 if home_team else 1
+        newpitch.buildLineUp(self.events[team_index]['tactics']['lineup'], home = home_team,
+                            both = False)
+        newpitch.show()
+
+
 
 
         
