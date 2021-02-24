@@ -1,30 +1,3 @@
-
-positions = {
-    'Goalkeeper' : 1,
-    'Right Back' : 2,
-    'Right Center Back' : 3,
-    'Center Back' : 3.5,
-    'Left Center Back' : 4,
-    'Left Back' : 5,
-    'Right Wing Back' : 12,
-    'Left Wing Back' : 13,
-    'Right Defensive Midfielder' : 6,
-    'Center Defensive Midfielder' : 6.1, 
-    'Left Defensive Midfielder' : 6.2,
-    'Right Center Midfield' : 8.1,
-    'Left Center Midfield' : 8.2,
-    'Left Midfield' : 8.5,
-    'Right Midfield' : 8.6,
-    'Right Attacking Midfield' : 8.8,
-    'Left Attacking Midfield' : 8.9,
-    'Right Wing' : 7.1,
-    'Center Forward' : 7.2,
-    'Left Wing' : 7.3,
-    'Left Center Forward' : 9.1,
-    'Right Center Forward' : 9.2,
-    'Striker' : 7.4
-}
-
 class Match:
     """
     A class used to represent a football Match captured by event (play by play) data
