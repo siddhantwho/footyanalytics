@@ -1,3 +1,5 @@
+from pitch import Pitch
+
 class Match:
     """
     A class used to represent a football Match captured by event (play by play) data
@@ -42,5 +44,11 @@ class Match:
         """
         Shows a matplotlib visual representation of the starting lineups of both teams
         """
-        home_formation = self.events[0]['tactics']['formation']
-        away_formation = self.events[1]['tactics']['formation']
+        newpitch = Pitch()
+        newpitch.buildLineUp(self.events[0]['tactics']['lineup'], home = True)
+        newpitch.buildLineUp(self.events[1]['tactics']['lineup'], home = False)
+        newpitch.show()
+        
+
+
+        

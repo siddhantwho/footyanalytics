@@ -4,13 +4,13 @@ from matplotlib.patches import Arc, Circle, ConnectionPatch, Rectangle, Wedge
 
 positions = {
     'Goalkeeper' : (7.5,40),
-    'Right Back' : (20, 16),
+    'Right Back' : (22.5, 12),
     'Right Center Back' : (20,32),
     'Center Back' : (22.5, 40),
     'Left Center Back' : (20,48),
-    'Left Back' : (20,64),
-    'Right Wing Back' : (25,10),
-    'Left Wing Back' : (25,70),
+    'Left Back' : (22.5,68),
+    'Right Wing Back' : (27.5,10),
+    'Left Wing Back' : (27.5,70),
     'Right Defensive Midfield' : (30, 20),
     'Center Defensive Midfield' : (30, 40), 
     'Left Defensive Midfield' : (30,60),
@@ -20,9 +20,9 @@ positions = {
     'Right Midfield' : (40,10),
     'Right Attacking Midfield' : (45,20),
     'Left Attacking Midfield' : (45,60),
-    'Right Wing' : (52.5,10),
+    'Right Wing' : (50,10),
     'Center Forward' : (52.5, 40),
-    'Left Wing' : (52.5,70),
+    'Left Wing' : (50,70),
     'Left Center Forward' : (52.5, 55),
     'Right Center Forward' : (52.5,25),
     'Striker' : (60,60)
@@ -44,7 +44,7 @@ def jersey(x:float,y:float, home: bool, traditional: bool) -> list:
         traditional colours are green and white, else white and black.
     """
     pitch_color = 'green' if traditional else 'white'
-    a = 2.75 #scale factor
+    a = 2.5 #scale factor
     if home:
         return [
   
@@ -100,7 +100,7 @@ class Pitch:
             The desired length of the pitch in metres
         width (optional): float 
             The desired width of the pitch in metres
-        traditional : bool
+        traditional (optional) : bool
             Whether to use traditional colors (green and white) or modern (white and black)
         """
         self.length = length
@@ -114,11 +114,6 @@ class Pitch:
         components = self.__pitch_components()
         for shape in components: #draw pitch using individual shapes
             axes.add_artist(shape)
-        
-        # for pos in positions.keys():
-        #     jerz = jersey(positions[pos][0],positions[pos][1],True,True,scale=2)
-        #     for i in jerz:
-        #         axes.add_artist(i)
 
         self.axes = axes
         self.figure = figure
@@ -164,9 +159,26 @@ class Pitch:
                 theta1=130, theta2=230, color=line_color)
         ]
 
-    def buildLineUp(self, lineup, home, traditional):
+    def buildLineUp(self, lineup: list, home: bool):
+        """
+        Builds a visual representation of the lineup on the pitch object
+        ...
+        Parameters
+        ----------
+        lineup : list
+            List of players participating in the game found in the event data
+        home : bool
+            Home or away team
+        """
+        lineup_list = []
         for player in lineup:
-            icon = jersey(positions[player[1]][0],positions[player[1]][1], home, traditional)
+            lineup_list.append([player['player']['name'], player['position']['name'],player['jersey_number']])
+        reflector_x = 0 if home else 120
+        reflector_y = 0 if home else 80
+        for player in lineup_list:
+            icon = jersey(abs(reflector_x - positions[player[1]][0]),
+                          abs(reflector_y - positions[player[1]][1]),
+                          home, self.traditional)
             for parts in icon:
                 self.axes.add_artist(parts)
     
@@ -178,20 +190,42 @@ if __name__ == "__main__":
 
 
     #pass
-    argentina = [['Franco Armani', 'Goalkeeper', 12],
-        ['Gabriel Iván Mercado', 'Right Back', 2],
-        ['Nicolás Hernán Otamendi', 'Right Center Back', 17],
-        ['Faustino Marcos Alberto Rojo', 'Left Center Back', 16],
-        ['Nicolás Alejandro Tagliafico', 'Left Back', 3],
-        ['Javier Alejandro Mascherano', 'Center Defensive Midfield', 14],
-        ['Enzo Nicolás Pérez', 'Right Center Midfield', 15],
-        ['Éver Maximiliano David Banega', 'Left Center Midfield', 7],
-        ['Ángel Fabián Di María Hernández', 'Right Wing', 11],
-        ['Cristian David Pavón', 'Left Wing', 22],
-        ['Lionel Andrés Messi Cuccittini', 'Center Forward', 10]]
+    argentina = [{'player': {'id': 6312, 'name': 'Franco Armani'},
+  'position': {'id': 1, 'name': 'Goalkeeper'},
+  'jersey_number': 12},
+ {'player': {'id': 5742, 'name': 'Gabriel Iván Mercado'},
+  'position': {'id': 2, 'name': 'Right Back'},
+  'jersey_number': 2},
+ {'player': {'id': 3090, 'name': 'Nicolás Hernán Otamendi'},
+  'position': {'id': 3, 'name': 'Right Center Back'},
+  'jersey_number': 17},
+ {'player': {'id': 3602, 'name': 'Faustino Marcos Alberto Rojo'},
+  'position': {'id': 5, 'name': 'Left Center Back'},
+  'jersey_number': 16},
+ {'player': {'id': 5507, 'name': 'Nicolás Alejandro Tagliafico'},
+  'position': {'id': 6, 'name': 'Left Back'},
+  'jersey_number': 3},
+ {'player': {'id': 5506, 'name': 'Javier Alejandro Mascherano'},
+  'position': {'id': 10, 'name': 'Center Defensive Midfield'},
+  'jersey_number': 14},
+ {'player': {'id': 5741, 'name': 'Enzo Nicolás Pérez'},
+  'position': {'id': 13, 'name': 'Right Center Midfield'},
+  'jersey_number': 15},
+ {'player': {'id': 5504, 'name': 'Éver Maximiliano David Banega'},
+  'position': {'id': 15, 'name': 'Left Center Midfield'},
+  'jersey_number': 7},
+ {'player': {'id': 2995, 'name': 'Ángel Fabián Di María Hernández'},
+  'position': {'id': 17, 'name': 'Right Wing'},
+  'jersey_number': 11},
+ {'player': {'id': 5496, 'name': 'Cristian David Pavón'},
+  'position': {'id': 21, 'name': 'Left Wing'},
+  'jersey_number': 22},
+ {'player': {'id': 5503, 'name': 'Lionel Andrés Messi Cuccittini'},
+  'position': {'id': 23, 'name': 'Center Forward'},
+  'jersey_number': 10}]
 
     newpitch = Pitch()
-    newpitch.buildLineUp(argentina, True,True)
+    newpitch.buildLineUp(argentina, False)
     newpitch.show()
     plt.show()
 
