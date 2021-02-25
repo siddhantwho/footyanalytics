@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Arc, Circle, ConnectionPatch, Rectangle, Wedge
+from matplotlib.lines import Line2D
 
 positions = {
     'Goalkeeper' : (7.5,40),
@@ -194,7 +195,7 @@ class Pitch:
         full_field = False if both else True
 
         num_color = 'black' if home else 'white'
-        player_list = [[x[0],x[2]] for x in lineup_list]
+        #player_list = [[x[0],x[2]] for x in lineup_list]
         for player in lineup_list:
 
             pos_x = abs(reflector_x - positions[player[1]][0])*scale
@@ -210,6 +211,11 @@ class Pitch:
                 self.axes.text(pos_x-1.85,pos_y-0.5, player[2], fontsize = 15, color = num_color)
             else:
                 self.axes.text(pos_x-1.5,pos_y-0.5, player[2], fontsize = 15, color = num_color)
+        handles = []
+        for player in lineup_list:
+            handles.append(Line2D([],[], color='red', marker = 'x', linestyle='None',
+                            markersize = 3,label= player[0]))
+        self.axes.legend(handles=handles, fontsize = 5)
     
     def show(self):
         self.figure.show()
