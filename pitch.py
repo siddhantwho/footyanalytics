@@ -60,15 +60,18 @@ def jersey(x:float,y:float, home: bool, traditional: bool, **kwargs) -> list:
             Rectangle([x-1.5*a,y-1*a], width=2.5*a, height=2.5*a, fill=True, ec = "red", fc ="red"),
             Rectangle([x+1*a,y-1.75*a], width=1*a, height=4*a, fill=True, ec = "red", fc ="red"),
             Wedge((x+2.25*a,y+0.25*a),r=0.8*a, theta1=90, theta2=270, ec=pitch_color,
-            fill = True, fc = pitch_color)
+            fill = True, fc = pitch_color),
+            Circle((x,y+0.5),2.5, fill=False, ec = "black")
 
         ]
+
     else:
         return [
             Rectangle([x-1*a,y-1*a], width=2.5*a, height=2.5*a, fill=True, ec = "blue", fc ="blue"),
             Rectangle([x-2*a,y-1.75*a], width=1*a, height=4*a, fill=True, ec = "blue", fc ="blue"),
             Wedge((x-2.25*a,y+0.25*a),r=0.8*a, theta1=270, theta2=90, ec=pitch_color,
-            fill = True, fc = pitch_color)
+            fill = True, fc = pitch_color),
+            Circle((x,y+0.5),2.5, fill=False, ec = "white")
 
         ]
 
@@ -116,10 +119,10 @@ class Pitch:
         self.width = width
         self.traditional = traditional
 
-        figure, axes = plt.subplots(figsize = (self.length/10,self.width/10))
+        figure, axes = plt.subplots(figsize = (self.length/10+6,self.width/10))
         axes.axis('off')  # this hides the x and y ticks
-        plt.ylim(-2, self.width + 2)
-        plt.xlim(-2, self.length + 2)
+        plt.ylim(-2, self.width)
+        plt.xlim(-30, self.length + 30)
         components = self.__pitch_components()
         for shape in components: #draw pitch using individual shapes
             axes.add_artist(shape)
@@ -189,12 +192,27 @@ class Pitch:
         reflector_y = 0 if home else 80
         scale = 1 if both else 2
         full_field = False if both else True
+
+        num_color = 'black' if home else 'white'
+
         for player in lineup_list:
-            icon = jersey(abs(reflector_x - positions[player[1]][0])*scale,
-                          abs(reflector_y - positions[player[1]][1]),
-                          home, self.traditional, full = full_field)
+
+            pos_x = abs(reflector_x - positions[player[1]][0])*scale
+            pos_y = abs(reflector_y - positions[player[1]][1])
+
+            icon = jersey(pos_x, pos_y, home, self.traditional, full = full_field)
             for parts in icon:
                 self.axes.add_artist(parts)
+
+            if player[2]<10:
+                self.axes.text(pos_x-1,pos_y-0.5, player[2], fontsize = 15, color = num_color)
+            elif player[2]<20:
+                self.axes.text(pos_x-1.85,pos_y-0.5, player[2], fontsize = 15, color = num_color)
+            else:
+                self.axes.text(pos_x-1.5,pos_y-0.5, player[2], fontsize = 15, color = num_color)
+        
+        plt.table(lineup_list)
+        
     
     def show(self):
         self.figure.show()
