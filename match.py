@@ -1,4 +1,5 @@
 from pitch import Pitch
+import requests
 
 class Match:
     """
@@ -57,6 +58,24 @@ class Match:
         newpitch.show()
 
 
+if __name__ == "__main__":
+
+    base_url = "https://raw.githubusercontent.com/statsbomb/open-data/master/data/"
+    match_url = base_url + "matches/{}/{}.json"
+    event_url = base_url + "events/{}.json"
+    comp_url = base_url + "competitions.json"
+    lineup_url = base_url + "lineups/{}.json"
 
 
-        
+    match_id = 8650
+    #match_id = 7586
+    comp_id = 43
+    season_id = 3
+
+    bel_bra = requests.get(event_url.format(match_id)).json()
+    fifawc = requests.get(match_url.format(comp_id,season_id)).json()
+    lineup = requests.get(lineup_url.format(match_id)).json()
+
+    testmatch = Match(bel_bra, fifawc, match_id, lineup)
+    testmatch.Formation(True)
+            

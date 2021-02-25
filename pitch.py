@@ -119,10 +119,10 @@ class Pitch:
         self.width = width
         self.traditional = traditional
 
-        figure, axes = plt.subplots(figsize = (self.length/10+6,self.width/10))
+        figure, axes = plt.subplots(figsize = (self.length/10,self.width/10))
         axes.axis('off')  # this hides the x and y ticks
-        plt.ylim(-2, self.width)
-        plt.xlim(-30, self.length + 30)
+        plt.ylim(-2, self.width+2)
+        plt.xlim(-2, self.length+2)
         components = self.__pitch_components()
         for shape in components: #draw pitch using individual shapes
             axes.add_artist(shape)
@@ -194,7 +194,7 @@ class Pitch:
         full_field = False if both else True
 
         num_color = 'black' if home else 'white'
-
+        player_list = [[x[0],x[2]] for x in lineup_list]
         for player in lineup_list:
 
             pos_x = abs(reflector_x - positions[player[1]][0])*scale
@@ -210,9 +210,6 @@ class Pitch:
                 self.axes.text(pos_x-1.85,pos_y-0.5, player[2], fontsize = 15, color = num_color)
             else:
                 self.axes.text(pos_x-1.5,pos_y-0.5, player[2], fontsize = 15, color = num_color)
-        
-        plt.table(lineup_list)
-        
     
     def show(self):
         self.figure.show()
