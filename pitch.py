@@ -120,10 +120,10 @@ class Pitch:
         self.width = width
         self.traditional = traditional
 
-        figure, axes = plt.subplots(figsize = (self.length/10,self.width/10))
+        figure, axes = plt.subplots(figsize = (self.length/10 + 5,self.width/10))
         axes.axis('off')  # this hides the x and y ticks
         plt.ylim(-2, self.width+2)
-        plt.xlim(-2, self.length+2)
+        plt.xlim(-2 - 25, self.length+2 + 25)
         components = self.__pitch_components()
         for shape in components: #draw pitch using individual shapes
             axes.add_artist(shape)
@@ -195,13 +195,16 @@ class Pitch:
         full_field = False if both else True
 
         num_color = 'black' if home else 'white'
-        #player_list = [[x[0],x[2]] for x in lineup_list]
+        home_handles = []
+        away_handles = []
         for player in lineup_list:
 
             pos_x = abs(reflector_x - positions[player[1]][0])*scale
             pos_y = abs(reflector_y - positions[player[1]][1])
 
             icon = jersey(pos_x, pos_y, home, self.traditional, full = full_field)
+            
+
             for parts in icon:
                 self.axes.add_artist(parts)
 
@@ -211,11 +214,38 @@ class Pitch:
                 self.axes.text(pos_x-1.85,pos_y-0.5, player[2], fontsize = 15, color = num_color)
             else:
                 self.axes.text(pos_x-1.5,pos_y-0.5, player[2], fontsize = 15, color = num_color)
-        handles = []
-        for player in lineup_list:
-            handles.append(Line2D([],[], color='red', marker = 'x', linestyle='None',
-                            markersize = 3,label= player[0]))
-        self.axes.legend(handles=handles, fontsize = 5)
+            
+            if positions[player[1]][0] >= 50:
+                legend_color = 'red'
+                legend_marker = '>'
+            elif positions[player[1]][0] >= 30:
+                legend_color = 'blue'
+                legend_marker = 'o'
+            elif positions[player[1]][0] >= 10:
+                legend_color = 'green'
+                legend_marker = '<'
+            else:
+                legend_color = 'yellow'
+                legend_marker = 'x'
+
+            if home:
+                home_handles.append(Line2D([],[], color=legend_color, marker = legend_marker,
+                linestyle='None', markersize = 10,label= f'{player[2]} : {player[0]} \n'))
+            else:
+                away_handles.append(Line2D([],[], color=legend_color, marker = legend_marker,
+                linestyle='None', markersize = 10,label= f'{player[2]} : {player[0]} \n'))
+
+
+        if both:
+            legend_home = plt.legend(handles=home_handles, fontsize = 10, bbox_to_anchor=(-0.1, 0.5),
+                        loc='center left', ncol=1)
+            legend_away = plt.legend(handles=away_handles, fontsize = 10, bbox_to_anchor=(1.065, 0.5),
+                        loc='center right', ncol=1)
+            self.axes.add_artist(legend_home)
+            self.axes.add_artist(legend_away)
+        else:
+            self.axes.legend(handles=home_handles, fontsize = 10, bbox_to_anchor=(-0.1, 0.5),
+                        loc='center left', ncol=1)
     
     def show(self):
         self.figure.show()

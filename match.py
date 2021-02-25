@@ -77,5 +77,5 @@ if __name__ == "__main__":
     lineup = requests.get(lineup_url.format(match_id)).json()
 
     testmatch = Match(bel_bra, fifawc, match_id, lineup)
-    testmatch.Formation(True)
+    testmatch.Lineups()
             
