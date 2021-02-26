@@ -9,17 +9,24 @@ class Match:
 
     Attributes
     ----------
-    match : DataFrame
+    match : list
         An object containing information about each event in the football match in tabular format
-    competition: DataFrame
+    competition: list
         An object containing information about all the matches in the competition
     match_id : int
         The Statsbomb match ID for the match being loaded
-    lineup : DataFrame
+    lineup : list
         An object containing Statsbomb lineup information for the match in a table
-
+    managers : list
+        objects containing the information about the managers of the teams
     Methods
     -------
+    Lineups() :
+        Shows the lineups of the two teams on a pitch objects
+    Formation() :
+        Shows the formation of one team on the pitch
+        
+
 
 
     """
