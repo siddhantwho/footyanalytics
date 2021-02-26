@@ -55,9 +55,9 @@ def jersey(x:float,y:float, home: bool, traditional: bool, **kwargs) -> list:
         if kwargs['full']:
             a = 3.25
      
-    if home:
+    if home:   
         return [
-  
+            
             Rectangle([x-1.5*a,y-1*a], width=2.5*a, height=2.5*a, fill=True, ec = "red", fc ="red"),
             Rectangle([x+1*a,y-1.75*a], width=1*a, height=4*a, fill=True, ec = "red", fc ="red"),
             Wedge((x+2.25*a,y+0.25*a),r=0.8*a, theta1=90, theta2=270, ec=pitch_color,
@@ -215,7 +215,7 @@ class Pitch:
 
         for player in lineup_list:
 
-            pos_x = abs(reflector_x - positions[player[1]][0])*scale
+            pos_x = abs(reflector_x - positions[player[1]][0]*scale)
             pos_y = abs(reflector_y - positions[player[1]][1])
 
             #jersey icons on pitch
@@ -269,11 +269,10 @@ class Pitch:
         else: #plotting just one team
             if home:
                 self.axes.add_artist(legend_home)
-                #self.axes.add_artist(legend_home_manager)
+                self.axes.add_artist(legend_home_manager)
             else:
-                pass
-                #self.axes.add_artist(legend_away)
-                #self.axes.add_artist(legend_away_manager)
+                self.axes.add_artist(legend_away)
+                self.axes.add_artist(legend_away_manager)
 
     
     def show(self):
