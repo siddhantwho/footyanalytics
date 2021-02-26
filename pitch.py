@@ -172,7 +172,7 @@ class Pitch:
                 theta1=130, theta2=230, color=line_color)
         ]
 
-    def buildLineUp(self, lineup: list, home: bool, both: bool = True):
+    def buildLineUp(self, lineup: list, managers, home: bool, both: bool = True):
         """
         Builds a visual representation of the lineup on the pitch object
         ...
@@ -180,6 +180,8 @@ class Pitch:
         ----------
         lineup : list
             List of players participating in the game found in the event data
+        managers : list or tuple
+            strings of the managers names
         home : bool
             Home or away team
         both : bool
@@ -236,14 +238,28 @@ class Pitch:
                 linestyle='None', markersize = 10,label= f'{player[2]} : {player[0]} \n'))
 
 
-        if both:
+        if both: #plotting both teams on the same pitch
             legend_home = plt.legend(handles=home_handles, fontsize = 10, bbox_to_anchor=(-0.1, 0.5),
                         loc='center left', ncol=1)
             legend_away = plt.legend(handles=away_handles, fontsize = 10, bbox_to_anchor=(1.065, 0.5),
                         loc='center right', ncol=1)
+
+            handle_home_manager = Line2D([],[], color="black", marker = '2',
+                linestyle='None', markersize = 10,label= f'{managers[0]}')
+            handle_away_manager = Line2D([],[], color="black", marker = '2',
+                linestyle='None', markersize = 10,label= f'{managers[1]}')
+
+            legend_home_manager = plt.legend(handles=[handle_home_manager], fontsize = 10, bbox_to_anchor=(-0.1, 0.95),
+                        loc='center left', ncol=1)         
+            legend_away_manager = plt.legend(handles=[handle_away_manager], fontsize = 10, bbox_to_anchor=(1.065, 0.95),
+                        loc='center right', ncol=1)
+
             self.axes.add_artist(legend_home)
+            self.axes.add_artist(legend_home_manager)
             self.axes.add_artist(legend_away)
-        else:
+            self.axes.add_artist(legend_away_manager)
+
+        else: #plotting just one team and additional tactical information
             self.axes.legend(handles=home_handles, fontsize = 10, bbox_to_anchor=(-0.1, 0.5),
                         loc='center left', ncol=1)
     
