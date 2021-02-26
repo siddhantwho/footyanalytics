@@ -40,14 +40,22 @@ class Match:
         self.competition = competition
         self.match_id = match_id
         self.lineup = lineup
-    
+
+        for i in self.competition:
+            if i['match_id'] == self.match_id:
+                match_in_comp = i
+        self.match_info = match_in_comp
+        self.home_manager = self.match_info['home_team']['managers'][0]
+        self.away_manager = self.match_info['away_team']['managers'][0]
+
     def Lineups(self):
         """
         Shows a matplotlib visual representation of the starting lineups of both teams
         """
         newpitch = Pitch()
-        newpitch.buildLineUp(self.events[0]['tactics']['lineup'], home = True, both = True)
-        newpitch.buildLineUp(self.events[1]['tactics']['lineup'], home = False, both = True)
+        managers = self.__managerNames()
+        newpitch.buildLineUp(self.events[0]['tactics']['lineup'], managers, home = True, both = True)
+        newpitch.buildLineUp(self.events[1]['tactics']['lineup'], managers, home = False, both = True)
         newpitch.show()
         
     def Formation(self, home_team: bool):
@@ -57,6 +65,10 @@ class Match:
                             both = False)
         newpitch.show()
 
+    def __managerNames(self):
+        home_manager_name = self.home_manager['nickname'] if self.home_manager['nickname'] else self.home_manager['name']
+        away_manager_name = self.away_manager['nickname'] if self.away_manager['nickname'] else self.away_manager['name']
+        return (home_manager_name, away_manager_name)
 
 if __name__ == "__main__":
 
