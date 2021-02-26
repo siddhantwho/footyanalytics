@@ -59,13 +59,20 @@ class Match:
         newpitch.show()
         
     def Formation(self, home_team: bool):
+        """
+        Show a matplotlib representation of the formation of the selected team
+        """
         newpitch = Pitch()
         team_index = 0 if home_team else 1
-        newpitch.buildLineUp(self.events[team_index]['tactics']['lineup'], home = home_team,
+        managers = self.__managerNames()
+        newpitch.buildLineUp(self.events[team_index]['tactics']['lineup'], managers, home = home_team,
                             both = False)
         newpitch.show()
 
     def __managerNames(self):
+        """
+        Private method to return manager names from manager object attribute
+        """
         home_manager_name = self.home_manager['nickname'] if self.home_manager['nickname'] else self.home_manager['name']
         away_manager_name = self.away_manager['nickname'] if self.away_manager['nickname'] else self.away_manager['name']
         return (home_manager_name, away_manager_name)
@@ -90,4 +97,5 @@ if __name__ == "__main__":
 
     testmatch = Match(bel_bra, fifawc, match_id, lineup)
     testmatch.Lineups()
+    #testmatch.Formation(False)
             

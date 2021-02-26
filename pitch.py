@@ -76,6 +76,19 @@ def jersey(x:float,y:float, home: bool, traditional: bool, **kwargs) -> list:
 
         ]
 
+def manager_handles(managers):
+    handle_home_manager = Line2D([],[], color="black", marker = '2',
+                linestyle='None', markersize = 10,label= f'{managers[0]}')
+    handle_away_manager = Line2D([],[], color="black", marker = '2',
+                linestyle='None', markersize = 10,label= f'{managers[1]}')
+
+    legend_home_manager = plt.legend(handles=[handle_home_manager], fontsize = 8, bbox_to_anchor=(-0.1, 0.95),
+                        loc='center left', ncol=1)         
+    legend_away_manager = plt.legend(handles=[handle_away_manager], fontsize = 8, bbox_to_anchor=(1.065, 0.95),
+                        loc='center right', ncol=1)
+    return (legend_home_manager, legend_away_manager)
+
+
 
 class Pitch:
     """
@@ -199,17 +212,18 @@ class Pitch:
         num_color = 'black' if home else 'white'
         home_handles = []
         away_handles = []
+
         for player in lineup_list:
 
             pos_x = abs(reflector_x - positions[player[1]][0])*scale
             pos_y = abs(reflector_y - positions[player[1]][1])
 
+            #jersey icons on pitch
             icon = jersey(pos_x, pos_y, home, self.traditional, full = full_field)
-            
-
             for parts in icon:
                 self.axes.add_artist(parts)
-
+            
+            #jersey numbers
             if player[2]<10:
                 self.axes.text(pos_x-1,pos_y-0.5, player[2], fontsize = 15, color = num_color)
             elif player[2]<20:
@@ -217,6 +231,7 @@ class Pitch:
             else:
                 self.axes.text(pos_x-1.5,pos_y-0.5, player[2], fontsize = 15, color = num_color)
             
+            #lineup lists
             if positions[player[1]][0] >= 50:
                 legend_color = 'red'
                 legend_marker = '>'
@@ -229,39 +244,37 @@ class Pitch:
             else:
                 legend_color = 'yellow'
                 legend_marker = 'x'
-
+             
             if home:
                 home_handles.append(Line2D([],[], color=legend_color, marker = legend_marker,
                 linestyle='None', markersize = 10,label= f'{player[2]} : {player[0]} \n'))
             else:
                 away_handles.append(Line2D([],[], color=legend_color, marker = legend_marker,
-                linestyle='None', markersize = 10,label= f'{player[2]} : {player[0]} \n'))
+                linestyle='None', markersize = 8,label= f'{player[2]} : {player[0]} \n'))
 
+        legend_home = plt.legend(handles=home_handles, fontsize = 8, bbox_to_anchor=(-0.1, 0.5),
+                        loc='center left', ncol=1)
+        legend_away = plt.legend(handles=away_handles, fontsize = 8, bbox_to_anchor=(1.065, 0.5),
+                        loc='center right', ncol=1)
+        legend_home_manager = manager_handles(managers)[0]
+        legend_away_manager = manager_handles(managers)[1]
 
         if both: #plotting both teams on the same pitch
-            legend_home = plt.legend(handles=home_handles, fontsize = 10, bbox_to_anchor=(-0.1, 0.5),
-                        loc='center left', ncol=1)
-            legend_away = plt.legend(handles=away_handles, fontsize = 10, bbox_to_anchor=(1.065, 0.5),
-                        loc='center right', ncol=1)
-
-            handle_home_manager = Line2D([],[], color="black", marker = '2',
-                linestyle='None', markersize = 10,label= f'{managers[0]}')
-            handle_away_manager = Line2D([],[], color="black", marker = '2',
-                linestyle='None', markersize = 10,label= f'{managers[1]}')
-
-            legend_home_manager = plt.legend(handles=[handle_home_manager], fontsize = 10, bbox_to_anchor=(-0.1, 0.95),
-                        loc='center left', ncol=1)         
-            legend_away_manager = plt.legend(handles=[handle_away_manager], fontsize = 10, bbox_to_anchor=(1.065, 0.95),
-                        loc='center right', ncol=1)
 
             self.axes.add_artist(legend_home)
             self.axes.add_artist(legend_home_manager)
             self.axes.add_artist(legend_away)
             self.axes.add_artist(legend_away_manager)
 
-        else: #plotting just one team and additional tactical information
-            self.axes.legend(handles=home_handles, fontsize = 10, bbox_to_anchor=(-0.1, 0.5),
-                        loc='center left', ncol=1)
+        else: #plotting just one team
+            if home:
+                self.axes.add_artist(legend_home)
+                #self.axes.add_artist(legend_home_manager)
+            else:
+                pass
+                #self.axes.add_artist(legend_away)
+                #self.axes.add_artist(legend_away_manager)
+
     
     def show(self):
         self.figure.show()
