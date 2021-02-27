@@ -29,9 +29,14 @@ class Analytics:
         match : Match
         A match.Match object containing all the event information
         """
-        
+
         self.events = Match.events
         self.lineup = Match.lineup
+
+    def averagePosition(self):
+        action_events = [e for e in self.events if 'player' in e.keys()]
+        
+
 
 
 
