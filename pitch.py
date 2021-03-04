@@ -282,7 +282,7 @@ class Pitch:
 if __name__ == "__main__":
 
     newpitch = Pitch()
-    newpitch.show()
+    #newpitch.show()
     plt.show()
 
 
