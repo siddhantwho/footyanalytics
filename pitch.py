@@ -281,44 +281,7 @@ class Pitch:
 
 if __name__ == "__main__":
 
-
-    #pass
-    argentina = [{'player': {'id': 6312, 'name': 'Franco Armani'},
-  'position': {'id': 1, 'name': 'Goalkeeper'},
-  'jersey_number': 12},
- {'player': {'id': 5742, 'name': 'Gabriel Iván Mercado'},
-  'position': {'id': 2, 'name': 'Right Back'},
-  'jersey_number': 2},
- {'player': {'id': 3090, 'name': 'Nicolás Hernán Otamendi'},
-  'position': {'id': 3, 'name': 'Right Center Back'},
-  'jersey_number': 17},
- {'player': {'id': 3602, 'name': 'Faustino Marcos Alberto Rojo'},
-  'position': {'id': 5, 'name': 'Left Center Back'},
-  'jersey_number': 16},
- {'player': {'id': 5507, 'name': 'Nicolás Alejandro Tagliafico'},
-  'position': {'id': 6, 'name': 'Left Back'},
-  'jersey_number': 3},
- {'player': {'id': 5506, 'name': 'Javier Alejandro Mascherano'},
-  'position': {'id': 10, 'name': 'Center Defensive Midfield'},
-  'jersey_number': 14},
- {'player': {'id': 5741, 'name': 'Enzo Nicolás Pérez'},
-  'position': {'id': 13, 'name': 'Right Center Midfield'},
-  'jersey_number': 15},
- {'player': {'id': 5504, 'name': 'Éver Maximiliano David Banega'},
-  'position': {'id': 15, 'name': 'Left Center Midfield'},
-  'jersey_number': 7},
- {'player': {'id': 2995, 'name': 'Ángel Fabián Di María Hernández'},
-  'position': {'id': 17, 'name': 'Right Wing'},
-  'jersey_number': 11},
- {'player': {'id': 5496, 'name': 'Cristian David Pavón'},
-  'position': {'id': 21, 'name': 'Left Wing'},
-  'jersey_number': 22},
- {'player': {'id': 5503, 'name': 'Lionel Andrés Messi Cuccittini'},
-  'position': {'id': 23, 'name': 'Center Forward'},
-  'jersey_number': 10}]
-
     newpitch = Pitch()
-    newpitch.buildLineUp(argentina, False)
     newpitch.show()
     plt.show()
 
